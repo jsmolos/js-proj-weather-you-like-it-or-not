@@ -2,23 +2,16 @@ import chartTpl from '../templates/chart.hbs';
 import Chart from 'chart.js/auto';
 import { fiveDaysData } from './base/helper.js';
 
-// *****
-
 const chartRef = document.querySelector('.fivedays-chart');
 chartRef.insertAdjacentHTML('beforeend', chartTpl());
 const ctx = document.querySelector('.js-chart').getContext('2d');
 const chartBox = document.querySelector('.chart-box');
 
-// *****
-
 const boxOfShowChart = document.querySelector('.show-chart-box');
 const hideChartRef = document.querySelector('.hide-chart');
 
-// ***** Вешаем слушатель события
 boxOfShowChart.addEventListener('click', onShowChartClick);
 hideChartRef.addEventListener('click', onHideChartClick);
-
-// *****
 
 function onShowChartClick() {
   boxOfShowChart.classList.add('none');
@@ -37,29 +30,23 @@ function onHideChartClick() {
 let chart = null;
 
 function getChartData() {
-  // renderChartData();
-  // 1. Получаем число, месяц, год
-  const сhartData = fiveDaysData.map(e => {
+  const chartData = fiveDaysData.map(e => {
     return e.month + ' ' + e.day + ', ' + e.year;
   });
-  // 2. Получаем температуру
-  const сhartTemp = fiveDaysData.map(e => e.tempDay);
-  // 3. Получаем влажность
-  const сhartHumidity = fiveDaysData.map(e => e.humidity);
-  // 4. Получаем скорость ветра
-  const сhartWindSpeed = fiveDaysData.map(e => e.wind);
-  // 5. Получаем давление
-  const сhartPressure = fiveDaysData.map(e => e.pressure);
+
+  const chartTemp = fiveDaysData.map(e => e.tempDay);
+  const chartHumidity = fiveDaysData.map(e => e.humidity);
+  const chartWindSpeed = fiveDaysData.map(e => e.wind);
+  const chartPressure = fiveDaysData.map(e => e.pressure);
 
   chart = new Chart(ctx, {
     type: 'line',
     data: {
-      labels: сhartData,
-
+      labels: chartData,
       datasets: [
         {
           label: '— Temperature, C° ',
-          data: сhartTemp,
+          data: chartTemp,
           backgroundColor: '#FF6B09',
           borderColor: '#FF6B09',
           borderWidth: 1,
@@ -67,7 +54,7 @@ function getChartData() {
         },
         {
           label: '— Humidity, % ',
-          data: сhartHumidity,
+          data: chartHumidity,
           backgroundColor: '#0906EB',
           borderColor: '#0906EB',
           fill: false,
@@ -75,7 +62,7 @@ function getChartData() {
         },
         {
           label: '— Wind Speed, m/s ',
-          data: сhartWindSpeed,
+          data: chartWindSpeed,
           backgroundColor: '#EA9A05',
           borderColor: '#EA9A05',
           fill: false,
@@ -83,7 +70,7 @@ function getChartData() {
         },
         {
           label: '— Atmosphere Pressure, m/m',
-          data: сhartPressure,
+          data: chartPressure,
           backgroundColor: '#067806',
           borderColor: '#067806',
           fill: false,
@@ -96,8 +83,6 @@ function getChartData() {
         legend: {
           display: true,
           align: 'start',
-          // position: 'bottom',
-
           labels: {
             boxWidth: 12,
             boxHeight: 12,
@@ -106,16 +91,13 @@ function getChartData() {
           },
         },
       },
-
       interaction: {
         mode: 'point',
       },
-
       scales: {
         x: {
           grid: {
             color: 'rgba(255, 255, 255, 0.54)',
-
             ticks: {
               padding: 20,
             },
@@ -130,7 +112,6 @@ function getChartData() {
           grid: {
             color: 'rgba(255, 255, 255, 0.54)',
             stepSize: 0.5,
-
             ticks: {
               padding: 20,
             },
@@ -141,7 +122,6 @@ function getChartData() {
       maintainAspectRatio: false,
     },
   });
-  // initEvtFiveDays();
 }
 
-export default onHideChartClick;
+export { onHideChartClick };
